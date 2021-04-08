@@ -39,8 +39,9 @@ Before deploying the example application on Kubernetes/OpenShift we have to run 
 chmod +x prepare-truststore.sh && ./prepare-truststore.sh
 ```
 
-## Test from Local IDE
+## Test from command line
 ```
+wget https://mirror-hk.koddos.net/apache/kafka/2.7.0/kafka_2.13-2.7.0.tgz
 
 oc -n demo-amq-stream get service my-cluster-kafka-bootstrap-nodeport -o=jsonpath='{.spec.ports[0].nodePort}{"\n"}'
 30495

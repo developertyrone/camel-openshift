@@ -1,6 +1,7 @@
 package com.example.demo;
 
 import org.apache.camel.Exchange;
+import org.apache.camel.LoggingLevel;
 import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
 import org.slf4j.Logger;
@@ -27,7 +28,7 @@ public class MLLPRoute extends RouteBuilder {
         ;
 
         from("direct:tokafka")
-                .log(tmpDirsLocation)
+                .log(LoggingLevel.DEBUG, tmpDirsLocation)
                 .log("Send to Kafka")
                 .to("kafka:{{kafka.producer.topic}}");
         ;
