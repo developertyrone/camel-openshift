@@ -55,4 +55,5 @@ bin/kafka-console-consumer.sh --bootstrap-server my-cluster-kafka-bootstrap-demo
 ```
 
 ##deploy to Openshift
-mvn fabric8:deploy -Pkubernetes
+./mvnw clean fabric8:deploy -Popenshift
+

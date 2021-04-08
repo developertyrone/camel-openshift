@@ -11,7 +11,7 @@ spec:
       containers:
         - volumeMounts:
             - name: truststore-config
-              mountPath: /tmp/kafka/truststore.jks
+              mountPath: /tmp/kafka
           resources:
             requests:
               cpu: "0.2"
