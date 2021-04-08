@@ -57,14 +57,18 @@ bin/kafka-console-consumer.sh --bootstrap-server 10.0.0.9:30495 --topic demo-top
 bin/kafka-console-consumer.sh --bootstrap-server my-cluster-kafka-bootstrap-demo-amq-stream.apps.dev.ocp.local:443 --consumer-property security.protocol=SSL --consumer-property ssl.truststore.password=123456 --consumer-property ssl.truststore.location=./truststore.jks --topic demo-topic --from-beginning
 ```
 
-## deploy to Openshift
+## Deploy to Openshift
+```
 ./mvnw clean fabric8:deploy -Popenshift
+```
 
-## adding nodeport endpoint
+## Adding nodeport endpoint
+```
 oc -n demo-amq-stream expose dc demo --type=NodePort --name=mllp-demo --target-port=8888 --port=8888  --overrides '{ "apiVersion": "v1","spec":{"ports":[{"port":8888,"protocol":"TCP","targetPort":8888,"nodePort":30495}]}}'
-
-## test using mllp client
+```
+## Test using mllp client
 https://github.com/rkettelerij/mllp-client
 
-example
+example:
+
 .\go_build_mllp_client_go.exe -file adt_a01.txt -host <node-ip> -port 30495
