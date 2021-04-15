@@ -38,6 +38,10 @@ Before deploying the example application on Kubernetes/OpenShift we have to run 
 ```
 chmod +x prepare-truststore.sh && ./prepare-truststore.sh
 ```
+## Using External Configuration
+```
+oc create configmap spring-app-config --from-file=application.properties
+```
 
 ## Test from command line
 ```
