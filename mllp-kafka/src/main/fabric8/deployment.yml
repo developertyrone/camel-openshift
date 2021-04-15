@@ -8,10 +8,19 @@ spec:
             items:
               - key: truststore.jks
                 path: truststore.jks
+        - name: application-config
+            configMap:
+              name: spring-app-config
+              items:
+                - key: application.properties
+                  path: application.properties
       containers:
         - volumeMounts:
             - name: truststore-config
               mountPath: /tmp/kafka
+            - name: application-config
+                mountPath: "/deployments/config"
+                readOnly: true
           resources:
             requests:
               cpu: "0.2"
@@ -19,6 +28,6 @@ spec:
             limits:
               cpu: "1.0"
               ### memory: 256Mi
-          env:
-            - name: SPRING_APPLICATION_JSON
-              value: '{"server":{"tomcat":{"max-threads":1}}}'
+          #env:
+          #  - name: SPRING_APPLICATION_JSON
+          #    value: '{"server":{"tomcat":{"max-threads":1}}}'
