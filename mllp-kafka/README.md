@@ -67,6 +67,65 @@ bin/kafka-console-consumer.sh --bootstrap-server my-cluster-kafka-bootstrap-demo
 ./mvnw clean fabric8:deploy -Popenshift
 ```
 
+## Build image and push to openshift
+```
+./mnvw install
+./mvnw package fabric8:build -Popenshift
+
+oc create is mllp-kafka
+docker pull <dockerhub>/<yourrepo>
+docker tag <dockerhub>/<yourrepo> <internal-registry>/<your-project>/mllp-kafka
+docker push <internal-registry>/<your-project>/mllp-kafka
+```
+
+## Create Deployment
+```
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: mllp-kafka
+  namespace: <namespace>
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mllp-kafka
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: mllp-kafka
+    spec:
+      volumes:
+        - name: application-config
+          configMap:
+            name: spring-app-config
+            items:
+              - key: application.properties
+                path: application.properties
+            defaultMode: 420
+      containers:
+        - name: mllp-kafka
+          image: <image>
+          ports:
+            - containerPort: 4650
+              protocol: TCP
+          volumeMounts:
+            - name: application-config
+              readOnly: true
+              mountPath: /deployments/config
+          resources:
+            requests:
+              cpu: "0.2"
+              ### memory: 256Mi
+            limits:
+              cpu: "1.0"
+              ### memory: 256Mi
+```  
+
+
+```
+
 ## Adding nodeport endpoint
 ```
 oc -n demo-amq-stream expose dc demo --type=NodePort --name=mllp-demo --target-port=8888 --port=8888  --overrides '{ "apiVersion": "v1","spec":{"ports":[{"port":8888,"protocol":"TCP","targetPort":8888,"nodePort":30495}]}}'

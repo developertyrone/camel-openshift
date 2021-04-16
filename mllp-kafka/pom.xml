@@ -75,6 +75,12 @@
 			<artifactId>camel-kafka-starter</artifactId>
 			<version>3.9.0</version>
 		</dependency>
+
+		<dependency>
+			<groupId>org.apache.camel.springboot</groupId>
+			<artifactId>camel-mllp-starter</artifactId>
+			<version>3.9.0</version>
+		</dependency>
 	</dependencies>
 
 	<build>
