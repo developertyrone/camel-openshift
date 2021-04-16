@@ -17,7 +17,7 @@ public class MLLPRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
 
-        from("mllp:{{mllp.server}}:{{mllp.port}}")
+        from("mllp:{{mllp.server}}:{{mllp.port}}{{mllp.query_params}}")
                 .process(new Processor() {
                     public void process(Exchange exchange) throws Exception {
                         String payload = exchange.getIn().getBody(String.class);
